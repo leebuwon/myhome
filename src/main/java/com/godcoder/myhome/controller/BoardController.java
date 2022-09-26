@@ -25,12 +25,14 @@ public class BoardController {
 
     @Autowired
     private BoardValidator boardValidator;
-
+    // 8장 25분 부터
     @GetMapping("/list")
-    public String list(Model model, @PageableDefault(size = 2) Pageable pageable){
-        Page<Board> boards = boardRepository.findAll(pageable);
-        int startPage = Math.max(1, boards.getPageable().getPageNumber() - 4);
-        int endPage = Math.min(boards.getTotalPages(), boards.getPageable().getPageNumber() + 4);
+    public String list(Model model, @PageableDefault(size = 2) Pageable pageable,
+                       @RequestParam(required = false, defaultValue = "") String searchText){
+//        Page<Board> boards = boardRepository.findAll(pageable);
+        Page<Board> boards = boardRepository.findByTitleContainingOrContentContaining(searchText, searchText, pageable);
+        int startPage = Math.max(1, boards.getPageable().getPageNumber() - 4);  //page를 1부터 설정하게 해주는 것 -4는 pagenumber를 4개 보여주겠다!
+        int endPage = Math.min(boards.getTotalPages(), boards.getPageable().getPageNumber() + 4);   // number를 기준으로 +4개를 보여주겠다!
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
         model.addAttribute("boards", boards);
