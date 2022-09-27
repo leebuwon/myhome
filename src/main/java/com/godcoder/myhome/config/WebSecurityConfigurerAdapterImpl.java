@@ -6,24 +6,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
 
-@Configuration
-@EnableWebSecurity
-public class WebSecurityConfig {
+//@Configuration
+//@EnableWebSecurity
+public class WebSecurityConfigurerAdapterImpl extends WebSecurityConfigurerAdapter {
 
     @Autowired
     DataSource dataSource;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/", "/h2/**").permitAll()
@@ -37,16 +34,14 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .headers().frameOptions().disable()
         ;
-
-        return http.build();
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)
+    @Override
+    public void configure(AuthenticationManagerBuilder auth)
             throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder)
+                .passwordEncoder(this.passwordEncoder())
                 .usersByUsernameQuery("select username, password, enabled "
                         + "from user_table  "
                         + "where username = ?")
@@ -55,8 +50,9 @@ public class WebSecurityConfig {
                         + "inner join role r on ur.role_id = r.id "
                         + "where username = ?");
     }
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }
