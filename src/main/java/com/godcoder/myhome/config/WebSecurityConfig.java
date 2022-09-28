@@ -44,11 +44,12 @@ public class WebSecurityConfig {
                 .usersByUsernameQuery("select username, password, enabled "
                         + "from user  "
                         + "where username = ?")
-                .authoritiesByUsernameQuery("select username, name "
+                .authoritiesByUsernameQuery("select u.username, r.name "
                         + "from user_role ur inner join user u on ur.user_id = u.id "
-                        + "from join role r on ur.role_id = r.id "
-                        + "where email = ?");
+                        + "inner join role r on ur.role_id = r.id "
+                        + "where u.username = ?");
     }
+
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
