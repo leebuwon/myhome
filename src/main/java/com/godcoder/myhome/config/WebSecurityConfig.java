@@ -23,7 +23,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/", "/css/**").permitAll()
+                        .antMatchers("/","/account/register","/css/**").permitAll() // nullpointexception 발생한 이유가 userservice에 autowired 주지않았던 이유였음
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

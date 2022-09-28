@@ -39,6 +39,7 @@
 			<version>2.5.2</version>
 		</dependency>
 
+		<!--스프링 jdbc 의존성 주입-->
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
 			<artifactId>mariadb-java-client</artifactId>

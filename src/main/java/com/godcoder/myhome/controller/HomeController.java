@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping     // 원래 경로를 작성할 수 있음, 경로없다면 index 메서드가 호출됨
+    @GetMapping     // 브라우저를 통해서 webserver에 들어오면 getmapping 을 호출함
     public String index() {
         return "index";
     }

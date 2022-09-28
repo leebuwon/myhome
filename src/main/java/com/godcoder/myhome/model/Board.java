@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @Data       // lombok을 이용하여 getter / setter 없이 사용가능
 public class Board {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // ATUO는 3가지 중 알아서 선택해줌
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY는 자동적으로 auto increase 시켜줌
     private Long id;
     @NotNull
     @Size(min=2, max=30)

@@ -47,7 +47,7 @@ public class BoardController {
             Board board = boardRepository.findById(id).orElse(null); // optional 이기 때문에 조회된 값이 없을 경우 null로 반환
             model.addAttribute("board", board);
         }
-//         model.addAttribute("board", new Board());
+//        model.addAttribute("board", new Board());
         return "board/form";
     }
 
