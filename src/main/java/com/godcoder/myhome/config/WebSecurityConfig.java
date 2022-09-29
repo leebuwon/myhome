@@ -22,8 +22,9 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
-                        .antMatchers("/","/account/register","/css/**").permitAll() // nullpointexception 발생한 이유가 userservice에 autowired 주지않았던 이유였음
+                        .antMatchers("/","/account/register","/css/**","/api/**").permitAll() // nullpointexception 발생한 이유가 userservice에 autowired 주지않았던 이유였음
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
