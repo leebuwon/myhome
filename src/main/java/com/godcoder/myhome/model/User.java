@@ -30,7 +30,7 @@ public class User {
     
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)   // user가 board를 조회할 수 있게 양방향 mapping을 하였음
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-//    @JsonIgnore
+    @JsonIgnore
     private List<Board> boards = new ArrayList<>();
 
     // one으로 끝나는 것은 기본값이 EAGER / Many로 끝나는 것은 기본 값이 LAZY

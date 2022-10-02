@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 @RestController
 @RequestMapping("/api")
@@ -19,12 +20,17 @@ class UserApiController {
     private UserRepository repository;
 
     @GetMapping("/users")
-    List<User> all() {
+    List<User> all(@RequestParam(required = false) String method, @RequestParam(required = false) String text) {
         List<User> users = repository.findAll();
-        log.debug("getBoards().size() 호출전");
-        log.debug("getBoards().size() : {}", users.get(1).getBoards().size());
-        log.debug("getBoards().size() 호출후");
-//        users.get(0).getBoards().size();
+        if("query".equals(method)){
+            users = repository.findByUsernameQuery(text);   // method가 query일 경우에만 지정한 findByUsernameQuery 호출
+        } else if("nativeQuery".equals(method)) {
+            users = repository.findByUsernameNativeQuery(text);
+//        } else if ("jdbc".equals(method)) {
+//            users = repository.findByusernameJDBC(text);
+        } else{
+            users = repository.findAll();
+        }
         return users;
     }
 
