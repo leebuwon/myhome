@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
 
 import java.util.List;
-import java.util.function.Predicate;
+
+
+//jdbc 쿼리하는 법 다시한번 보기
 
 @RestController
 @RequestMapping("/api")

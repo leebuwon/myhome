@@ -7,6 +7,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.thymeleaf.util.StringUtils;
 
+
+//완강 하였습니다.
 @Component
 public class BoardValidator implements Validator {
 
